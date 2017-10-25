@@ -1,0 +1,5 @@
+#Python bycode
+*.py[co]
+*.pyc
+.env/
+db.sqlite3
