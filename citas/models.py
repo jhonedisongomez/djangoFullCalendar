@@ -8,6 +8,15 @@ import re
 from datetime import date
 from django_countries.fields import CountryField
 
+
+class Medicos(TimeStampedModel):
+
+    nombre = models.CharField(max_length = 50, blank = False, null= False)
+
+    def __str__(self):
+        return self.nombre
+
+
 class Persona(TimeStampedModel):
     """
     Representación de una :class:`Persona` en la aplicación
@@ -71,18 +80,18 @@ class Persona(TimeStampedModel):
         """
         return Persona.__expresion__.match(identidad)
     
-    def __str__(self):
-        """Muestra el nombre completo de la persona"""
-        return self.nombre_completo()
-    
     def get_absolute_url(self):
         """Obtiene la URL absoluta"""
         return reverse('persona-view-id', args=[self.id])
     
     def nombre_completo(self):
         """Obtiene el nombre completo de la :class:`Persona`"""
-        return _('{0} {1}').format(self.nombre, self.apellido).upper()
+        return ('{0} {1}').format(self.nombre, self.apellido).upper()
     
+    def __str__(self):
+        """Muestra el nombre completo de la persona"""
+        return self.nombre_completo()
+
     def obtener_edad(self):
         """Obtiene la edad de la :class:`Persona`"""
         if self.nacimiento is None:
@@ -135,7 +144,10 @@ class Cita(TimeStampedModel):
     en una fecha determinada"""
     consultorio = models.ForeignKey(Consultorio, related_name='citas',blank=True, null=True)
     persona = models.ForeignKey(Persona, related_name='citas', blank=True,null=True)
+    medico = models.ForeignKey(Medicos, related_name='medicos', blank=False, null=True)
     #tipo = models.ForeignKey(TipoConsulta, blank=True, null=True)
+    fecha_inicio = models.DateTimeField(blank=True, null=True)
+    fecha_fin = models.DateTimeField(blank=True, null=True)
     fecha = models.DateTimeField(blank=True, null=True, default=timezone.now)
     ausente = models.BooleanField(default=False)
     atendida = models.BooleanField(default=False)

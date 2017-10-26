@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+
+    {% load static from staticfiles %}
+    <meta charset='utf-8' />
+    <link rel="stylesheet" href="{% static 'css/general.css' %}"/>
+	<script src="{% static 'libs/fullcalendar/lib/jquery.min.js' %}"></script>
+    <script src="{% static 'js/general.js' %}"></script>
+
+</head>
+
+<body style="background: #fff;">
+	<input type="hidden" id="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+	{% block content %}
+
+	{% endblock %}
+
+	</script>
+ 
+
+</body>
+</html>

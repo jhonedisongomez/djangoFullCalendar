@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from citas.views import CitasView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^', CitasView.as_view(),name='citas'),
 ]
